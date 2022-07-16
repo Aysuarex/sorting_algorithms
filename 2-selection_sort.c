@@ -1,4 +1,5 @@
 #include "sort.h"
+#include <stdio.h>
 
 
 /**
@@ -10,13 +11,13 @@
  */
 void selection_sort(int *array, size_t size)
 {
-	size_t i = 0, k = 0, j = -1;
+	size_t i = 0, k = 0, j;
 	int tmp;
 
-	for (i = 0; i < size; i++)
+	for (i = 0; i < size - 1; i++)
 	{
 		j = i;
-		for (k = i; k < size; k++)
+		for (k = i + 1; k < size; k++)
 		{
 			if (array[k] < array[j])
 				j = k;
