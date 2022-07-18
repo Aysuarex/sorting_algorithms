@@ -36,6 +36,4 @@ All of the following programs are written in C:
 | `106-O` | File that stores the best, average and worst case of the time complexity of the **Bitonic sort** algorithm |
 | `1000-0` | Cards Question |
 
-
 This is an algorithm-based project in C Programming Language, by Ayomide Suara and Mohamed Ibrahima Traore.
-
