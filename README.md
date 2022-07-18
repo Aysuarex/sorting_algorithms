@@ -1,6 +1,5 @@
 # Sorting algorithms
 
-<<<<<<< HEAD
 Project done during **Full Stack Software Engineering studies** at **ALX**. It aims to learn about sorting algorithms (bubble sort, insertion sort, selection sort, quick sort and so on) and Big O Notation in **C language**.
 
 ## Technologies
@@ -36,6 +35,7 @@ All of the following programs are written in C:
 | `106-bitonic_sort.c` | Function that sorts an array of integers in ascending order using the **Bitonic sort** algorithm |
 | `106-O` | File that stores the best, average and worst case of the time complexity of the **Bitonic sort** algorithm |
 | `1000-0` | Cards Question |
-=======
-This is an algorithm-based project in C Programming Language, by Ayomide Suara and Mohamed Ibrahima Traore
->>>>>>> db53c4e8eceaab770fbebdb1aebda6a762f0121d
+
+
+This is an algorithm-based project in C Programming Language, by Ayomide Suara and Mohamed Ibrahima Traore.
+
