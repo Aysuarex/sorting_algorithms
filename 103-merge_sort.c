@@ -1,105 +1,80 @@
 #include "sort.h"
-#include <stdio.h>
-/**
- * print_data - print data
- * @msg: message
- * @a: array
- * @from: from
- * @to: to
- * Return: no return
- */
-void print_data(char *msg, int *a, int from, int to)
-{
-	char *sep;
-	int i;
-
-	printf("[%s]: ", msg);
-	sep = "";
-
-	for (i = from; i <= to; i++)
-	{
-		printf("%s%d", sep, a[i]);
-		sep = ", ";
-	}
-	printf("\n");
-}
 
 /**
- * merge - Auxiliar function for
- * Merge sort algorithm
- * @a: array
- * @low: low index
- * @middle: middle
- * @high: high index
- * @buff: buffer
- * Return: no return
+ * top_down_merge - Merges an array that has been split using the
+ * top-down approach.
+ * @array: The array to merge.
+ * @array_c: The temporary array.
+ * @l: The left index of the split-array.
+ * @m: The mid-point of the split-array.
+ * @r: The right index of the split-array.
  */
-void merge(int *a, int low, int middle, int high, int *buff)
+void top_down_merge(int *array, int *array_c, size_t l, size_t m, size_t r)
 {
-	int lo, lm, i;
-
-	lo = i = low;
-	lm = middle + 1;
+	size_t a = l, b = m, c;
 
 	printf("Merging...\n");
-	print_data("left", a, low, middle);
-	print_data("right", a, middle + 1, high);
-
-	while (lo <= middle && lm <= high)
+	printf("[left]: ");
+	print_array(array + l, m - l);
+	printf("[right]: ");
+	print_array(array + (m), r - m);
+	for (c = l; c < r; c++)
 	{
-		if (a[lo] < a[lm])
-			buff[i++] = a[lo++];
+		if ((a < m) && ((b >= r) || (array_c[a] <= array_c[b])))
+		{
+			array[c] = array_c[a++];
+		}
 		else
-			buff[i++] = a[lm++];
+		{
+			array[c] = array_c[b++];
+		}
 	}
-
-	while (lo <= middle)
-		buff[i++] = a[lo++];
-
-	while (lm <= high)
-		buff[i++] = a[lm++];
-
-	for (i = low; i <= high; i++)
-		a[i] = buff[i];
-
-	print_data("Done", a, low, high);
+	printf("[Done]: ");
+	print_array(array + l, r - l);
 }
+
 /**
- * msort -Auxiliar function for
- * Merge sort algorithm
- * @array: array
- * @low: low index
- * @high: high index
- * @buffer: buffer
- * Return: no return
+ * split_merge - Sorts an array that has been split using the
+ * merge sort algorithm.
+ * @array: The array that has been split.
+ * @array_c: The temporary array.
+ * @size: The length of the original array.
+ * @l: The left index of the split-array.
+ * @r: The right index of the split-array.
  */
-void msort(int *array, int low, int high, int *buffer)
+void split_merge(int *array, int *array_c, size_t size, size_t l, size_t r)
 {
-	int midle;
+	size_t i, mid;
 
-	if (low < high)
-	{
-		midle = (low + high - 1) / 2;
-		msort(array, low, midle, buffer);
-		msort(array, midle + 1, high, buffer);
-		merge(array, low, midle, high, buffer);
-	}
+	if ((r - l) <= 1)
+		return;
+	mid = (l + r) / 2;
+	split_merge(array, array_c, size, l, mid);
+	split_merge(array, array_c, size, mid, r);
+	for (i = l; i <= r + (r == size ? -1 : 0); i++)
+		array_c[i] = array[i];
+	top_down_merge(array, array_c, l, mid, r);
 }
+
 /**
- * merge_sort -Sorts an arrayof integers
- * in ascending order using the
- * Merge sort algorithm
- * @array: array
- * @size: size
- * Return: no return
+ * merge_sort - Sorts an array using the merge sort algorithm.
+ * @array: The array to sort.
+ * @size: The length of the array.
  */
 void merge_sort(int *array, size_t size)
 {
-	int *buffer;
+	size_t i;
+	int *array_c = NULL;
 
-	buffer = malloc(sizeof(int) * size);
-	if (!buffer)
-		return;
-	msort(array, 0, size - 1, buffer);
-	free(buffer);
+	if (array != NULL)
+	{
+		array_c = malloc(sizeof(int) * size);
+		if (array_c != NULL)
+		{
+			for (i = 0; i < size; i++)
+				array_c[i] = array[i];
+			split_merge(array, array_c, size, 0, size);
+			free(array_c);
+		}
+	}
 }
