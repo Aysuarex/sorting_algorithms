@@ -1,4 +1,22 @@
 #include "sort.h"
+#include <stdio.h>
+
+
+/**
+ * swap - swapt two values
+ * @a: A pointer to an integer
+ * @b: A pointer to an integer
+ *
+ * Return: void
+ */
+static void swap(int *a, int *b)
+{
+	static int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 
 /**
  * bubble_sort - sorts an array of integers in ascending order
@@ -10,23 +28,26 @@
  */
 void bubble_sort(int *array, size_t size)
 {
-	size_t i = 0;
-	int tmp = 0;
-	int sorted = 0;
+	size_t i;
+	int tmp;
 
-	while (!sorted)
+	while (1)
 	{
-		sorted = 1;
-		for (i = 0; i < size - 1; i++)
+		i = 0;
+		while (i < size - 1 && array[i] < array[i + 1])
+			i++;
+
+		if (i == size - 1)
+			break;
+
+		while (i < size - 1)
 		{
 			if (array[i] > array[i + 1])
 			{
-				tmp = array[i];
-				array[i] = array[i + 1];
-				array[i + 1] = tmp;
-				sorted = 0;
+				swap(array + i, array + i + 1);
 				print_array(array, size);
 			}
+			i++;
 		}
 	}
 }
