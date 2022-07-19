@@ -1,113 +1,73 @@
 #include "sort.h"
 
 /**
- * swap_nodes - Swaps two nodes in a doubly linked list.
- * @list: A pointer to the head of the linked list.
- * @l: The left item to swap.
- * @r: The right item to swap.
+ * quick_sort - function that sorts an array of integers
+ *              in ascending order using the Quick sort algorithm
+ * @array: array
+ * @size: array's size
+ * Return: void
  */
-void swap_nodes(listint_t **list, listint_t *l, listint_t *r)
+void quick_sort(int *array, size_t size)
 {
-	listint_t *tmp0 = NULL, *tmp1 = NULL, *tmp2 = NULL, *tmp3 = NULL;
-
-	if ((l == NULL) || (r == NULL) || (list == NULL) || (l == r))
+	if (array == NULL || size < 2)
 		return;
-	tmp0 = l->prev, tmp1 = l->next, tmp2 = r->prev, tmp3 = r->next;
-	if (l->prev == r)
-	{
-		l->next = r, l->prev = tmp2, r->next = tmp1, r->prev = l;
-		if (tmp2 != NULL)
-			tmp2->next = l;
-		if (tmp1 != NULL)
-			tmp1->prev = r;
-	}
-	else if (l->next == r)
-	{
-		l->next = tmp3, l->prev = r, r->next = l, r->prev = tmp0;
-		if (tmp0 != NULL)
-			tmp0->next = r;
-		if (tmp3 != NULL)
-			tmp3->prev = l;
-	}
-	else
-	{
-		l->next = tmp3, l->prev = tmp2, r->next = tmp1, r->prev = tmp0;
-		if (tmp0 != NULL)
-			tmp0->next = r;
-		if (tmp1 != NULL)
-			tmp1->prev = r;
-		if (tmp2 != NULL)
-			tmp2->next = l;
-		if (tmp3 != NULL)
-			tmp3->prev = l;
-	}
-	if (l->prev == NULL)
-		*list = l;
-	if (r->prev == NULL)
-		*list = r;
+
+	quick_s(array, 0, size - 1, size);
 }
 
 /**
- * get_tail - Retrieves the tail node of a doubly linked list.
- * @list: A pointer to the head of the linked list.
- *
- * Return: The tail of the linked list, otherwise NULL.
+ * partition - partition
+ * @array: array
+ * @lo: lower
+ * @hi: higher
+ * @size: array's size
+ * Return: i
  */
-listint_t *get_tail(listint_t **list)
+int partition(int *array, int lo, int hi, size_t size)
 {
-	listint_t *node = NULL;
+	int i = lo - 1, j = lo;
+	int pivot = array[hi], aux = 0;
 
-	if (list != NULL)
+	for (; j < hi; j++)
 	{
-		node = *list;
-		while ((node != NULL) && (node->next != NULL))
-			node = node->next;
+		if (array[j] < pivot)
+		{
+			i++;
+			if (array[i] != array[j])
+			{
+				aux = array[i];
+				array[i] = array[j];
+				array[j] = aux;
+				print_array(array, size);
+			}
+		}
 	}
-	return (node);
+	if (array[i + 1] != array[hi])
+	{
+		aux = array[i + 1];
+		array[i + 1] = array[hi];
+		array[hi] = aux;
+		print_array(array, size);
+	}
+	return (i + 1);
 }
 
 /**
- * cocktail_sort_list - Sorts a doubly linked list
- * using the cocktail shaker sort algorithm.
- * @list: The list to be sorted.
+ * quick_s - quick sort
+ * @array: given array
+ * @lo: lower
+ * @hi:higher
+ * @size: array's size
+ * Return: void
  */
-void cocktail_sort_list(listint_t **list)
+void quick_s(int *array, int lo, int hi, size_t size)
 {
-	char swapped = FALSE;
-	listint_t *node = NULL, *next = NULL, *tmp;
+	int pivot;
 
-	if (list == NULL)
-		return;
-	do {
-		node = *list;
-		next = (node == NULL ? NULL : node->next);
-		swapped = FALSE;
-		while ((node != NULL) && (next != NULL))
-		{
-			tmp = next;
-			if (node->n > next->n)
-			{
-				swap_nodes(list, node, next);
-				swapped = TRUE;
-				print_list(*list);
-			}
-			node = tmp, next = (node == NULL ? NULL : node->next);
-		}
-		if (!swapped)
-			break;
-		swapped = FALSE;
-		next = get_tail(list);
-		node = next == NULL ? NULL : next->prev;
-		while ((node != NULL) && (next != NULL))
-		{
-			tmp = node;
-			if (node->n > next->n)
-			{
-				swap_nodes(list, node, next);
-				swapped = TRUE;
-				print_list(*list);
-			}
-			next = tmp, node = next == NULL ? NULL : next->prev;
-		}
-	} while (swapped);
+	if (lo < hi)
+	{
+		pivot = partition(array, lo, hi, size);
+		quick_s(array, lo, pivot - 1, size);
+		quick_s(array, pivot + 1, hi, size);
+	}
 }
