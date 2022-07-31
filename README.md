@@ -164,7 +164,7 @@ Function Prototype:
     <ul>
     <li><a href="https://www.github.com/aysuarex">Github</a></li>
     <li><a href="https://www.twitter.com/Aysuarex">Twitter</a></li>
-    <li><a href="https://aysuarex@gmail.com">e-mail</a></li>
+    <li><a href="mailto:aysuarex@gmail.com">e-mail</a></li>
     </ul>
 </details>
 <details>
