@@ -169,9 +169,9 @@ Function Prototype:
 </details>
 <details>
     <summary>Mohamed Ibrahima Traore</summary>
-    <ul>
+    <ul
     <li><a href="https://www.github.com/codivily">Github</a></li>
     <li><a href="https://www.twitter.com/codivily">Twitter</a></li>
-    <li><a href="https://---@gmail.com">e-mail</a></li>
+    <li><a href="codivily@gmail.com">e-mail</a></li>
     </ul>
 </details>
